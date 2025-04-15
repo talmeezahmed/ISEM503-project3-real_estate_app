@@ -5,6 +5,8 @@ import numpy as np
 
 # Load trained pipeline (preprocessing + model)
 pipeline = joblib.load('real_estate_tuned_pipeline_model.pkl')
+# Load known cities
+known_cities = joblib.load('known_cities.pkl')
 
 # Page title
 st.title("🏠 Real Estate Price Predictor")
@@ -16,7 +18,8 @@ bed = st.number_input("Number of Bedrooms", min_value=0, max_value=10, value=3)
 bath = st.number_input("Number of Bathrooms", min_value=0, max_value=10, value=2)
 acre_lot = st.number_input("Lot Size (acres)", min_value=0.0, value=0.25)
 
-city = st.text_input("City Name (e.g., Pittsburgh)")  # OrdinalEncoder will map it to -1 if unseen
+# Dropdown for city
+city = st.selectbox("City", options=sorted(known_cities))
 sold_year = st.slider("Year of Last Sale", 2000, 2025, 2020)
 sold_month = st.slider("Month of Last Sale", 1, 12, 6)
 sold_age = 2025 - sold_year
